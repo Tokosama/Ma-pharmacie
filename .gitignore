@@ -17,3 +17,7 @@ logs/
 # Système
 .DS_Store
 Thumbs.db
+
+#Files
+
+test-db-connection.ts

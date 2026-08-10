@@ -1,0 +1,16 @@
+services:
+  postgres:
+    image: postgis/postgis:16-3.4
+    container_name: pharmacie_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: pharmacie_db
+      POSTGRES_USER: pharmacie_user
+      POSTGRES_PASSWORD: pharmacie_dev_pwdj
+    ports:
+      - "5432:5432"
+    volumes:
+      - pharmacie_pgdata:/var/lib/postgresql/data
+
+volumes:
+  pharmacie_pgdata:
