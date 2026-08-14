@@ -4,6 +4,11 @@ const getAll = async () => {
   return pharmacieRepository.findAll();
 };
 
-export const pharmacieService ={
-    getAll,
-}
+const getNearby = async (latitude: number, longitude: number) => {
+  return pharmacieRepository.findNearby(latitude, longitude);
+};
+
+export const pharmacieService = {
+  getAll,
+  getNearby,
+};
