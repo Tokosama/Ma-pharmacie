@@ -24,14 +24,39 @@ const findAll = async (): Promise<Pharmacie[]> => {
   return result.rows;
 };
 
-const findNearby = async (latitude: number, longitude: number): Promise<Pharmacie[]> => {
+const findNearby = async (
+  latitude: number,
+  longitude: number,
+): Promise<Pharmacie[]> => {
   const result = await pool.query<Pharmacie>(
-    "SELECT * FROM pharmacie where ST_DWithin(location,ST_SetSRID(ST_MakePoint($1,$2),4326)::geography,500)"
-  ,[longitude,latitude]);
+    "SELECT * FROM pharmacie where ST_DWithin(location,ST_SetSRID(ST_MakePoint($1,$2),4326)::geography,500)",
+    [longitude, latitude],
+  );
   return result.rows;
 };
 
+const findPharmacieDeGarde = async (): Promise<Pharmacie[]> => {
+  const result = await pool.query<Pharmacie>(
+    "SELECT DISTINCT pharmacie.* from pharmacie JOIN garde ON pharmacie.id = garde.pharmacie_id",
+  );
+  return result.rows;
+};
+
+const findPharmacieInformations = async (
+  id: string,
+): Promise<Pharmacie | null> => {
+  const result = await pool.query<Pharmacie>(
+    "SELECT * from pharmacie where id = $1",
+    [id],
+  );
+  return result.rows[0] ?? null;
+};
+
+//const findPharmacieByName = async (nom: string): Promise<Pharmacie[]> => {};
+
 export const pharmacieRepository = {
   findAll,
-  findNearby
+  findNearby,
+  findPharmacieDeGarde,
+  findPharmacieInformations,
 };

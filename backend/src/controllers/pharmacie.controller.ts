@@ -10,7 +10,6 @@ const getAll = asyncHandler(async (req, res) => {
 
 const getNearby = asyncHandler(async (req, res) => {
   const { latitude, longitude } = req.query;
-
   if (!latitude || !longitude) {
     return sendError(res, "Latitude ou Longitude non renseigné");
   }
@@ -19,13 +18,34 @@ const getNearby = asyncHandler(async (req, res) => {
   if (isNaN(lat) || isNaN(long)) {
     return sendError(res, "Rentrer des valeurs valides");
   }
-
   const pharmacieData = await pharmacieService.getNearby(lat, long);
   const success = sendSuccess(res, pharmacieData);
+  return success;
+});
+
+const getPharmacieDeGarde = asyncHandler(async (req, res) => {
+  const pharmacieDeGarde = await pharmacieService.getPharmacieDeGarde();
+  const success = sendSuccess(res, pharmacieDeGarde);
+  return success;
+});
+const getPharmacieInformations = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  if (!id || Array.isArray(id)) {
+    return sendError(res, "Cette pharmacie n'existe pas");
+  }
+  const pharmacieInformations =
+    await pharmacieService.getPharmacieInformations(id);
+
+  if (pharmacieInformations == null) {
+    return sendError(res, "Pharmacie non trouvée", 404);
+  }
+  const success = sendSuccess(res, pharmacieInformations);
   return success;
 });
 
 export const pharmacieController = {
   getAll,
   getNearby,
+  getPharmacieDeGarde,
+  getPharmacieInformations,
 };
