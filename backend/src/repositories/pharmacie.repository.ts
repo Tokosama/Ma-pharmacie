@@ -52,11 +52,18 @@ const findPharmacieInformations = async (
   return result.rows[0] ?? null;
 };
 
-//const findPharmacieByName = async (nom: string): Promise<Pharmacie[]> => {};
+const findPharmacieByName = async (nom: string): Promise<Pharmacie[]> => {
+  const result = await pool.query<Pharmacie>(
+    `SELECT *, similarity(nom, regexp_replace($1, '^pharma\\w*\\s+', '', 'i')) AS score FROM pharmacie WHERE nom % regexp_replace($1, '^pharma\\w*\\s+', '', 'i') ORDER BY score DESC LIMIT 10;`,
+    [nom],
+  );
+  return result.rows;
+};
 
 export const pharmacieRepository = {
   findAll,
   findNearby,
   findPharmacieDeGarde,
   findPharmacieInformations,
+  findPharmacieByName,
 };

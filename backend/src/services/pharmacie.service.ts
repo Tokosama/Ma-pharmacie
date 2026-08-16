@@ -12,12 +12,17 @@ const getPharmacieDeGarde = async () => {
   return pharmacieRepository.findPharmacieDeGarde();
 };
 
-const getPharmacieInformations = async (id:string) => {
+const getPharmacieInformations = async (id: string) => {
   return pharmacieRepository.findPharmacieInformations(id);
+};
+
+const getPharmacieByName = async (nom: string) => {
+  return pharmacieRepository.findPharmacieByName(nom);
 };
 export const pharmacieService = {
   getAll,
   getNearby,
   getPharmacieDeGarde,
-  getPharmacieInformations
+  getPharmacieInformations,
+  getPharmacieByName,
 };

@@ -42,10 +42,24 @@ const getPharmacieInformations = asyncHandler(async (req, res) => {
   const success = sendSuccess(res, pharmacieInformations);
   return success;
 });
+const getPharmacieByName = asyncHandler(async (req, res) => {
+  const { nom } = req.query;
+  if (!nom || typeof nom !== "string") {
+    return sendError(res, "Veuillez fournir un nom à rechercher");
+  }
+  const pharmacieInformations = await pharmacieService.getPharmacieByName(nom);
+  console.log(nom);
+  if (pharmacieInformations.length == 0) {
+    return sendError(res, "Cette pharmacie n'existe pas", 404);
+  }
+  const success = sendSuccess(res, pharmacieInformations);
+  return success;
+});
 
 export const pharmacieController = {
   getAll,
   getNearby,
   getPharmacieDeGarde,
   getPharmacieInformations,
+  getPharmacieByName,
 };
