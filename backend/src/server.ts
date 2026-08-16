@@ -1,5 +1,6 @@
 import express from "express";
 import pharmacieRoutes from "./routes/pharmacie.route.js";
+import itineraireRoutes from "./routes/itineraire.route.js"
 import { errorHandler } from "./middlewares/errorHandler.js";
 const app = express();
 
@@ -8,7 +9,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/pharmacies", pharmacieRoutes);
-
+app.use("/api/itineraire",itineraireRoutes)
 app.use(errorHandler);
 const startServer = () => {
   app.listen(4000, () => {
