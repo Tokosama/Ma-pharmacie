@@ -21,3 +21,4 @@ Thumbs.db
 #Files
 
 test-db-connection.ts
+test-rate-limit.ts
