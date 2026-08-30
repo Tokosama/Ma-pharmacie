@@ -22,3 +22,4 @@ Thumbs.db
 
 test-db-connection.ts
 test-rate-limit.ts
+test-redis-connection.ts

@@ -1,7 +1,27 @@
-import { pharmacieRepository } from "../repositories/pharmacie.repository.js";
+import {
+  pharmacieRepository,
+  type Pharmacie,
+} from "../repositories/pharmacie.repository.js";
+import redis from "../config/redis.js";
 
 const getAll = async () => {
-  return pharmacieRepository.findAll();
+  const redisKey = "pharmacie:all";
+
+  const pharmacieDataFromRedis = await redis.get(redisKey);
+  if (pharmacieDataFromRedis) {
+    console.log(pharmacieDataFromRedis);
+    return JSON.parse(pharmacieDataFromRedis) as Pharmacie[];
+  } else {
+    const pharmacieData = await pharmacieRepository.findAll();
+    await redis.set(
+      redisKey,
+      JSON.stringify(pharmacieData),
+      "EX",
+      1 * 24 * 3600,
+    );
+
+    return pharmacieData;
+  }
 };
 
 const getNearby = async (latitude: number, longitude: number) => {
@@ -9,7 +29,16 @@ const getNearby = async (latitude: number, longitude: number) => {
 };
 
 const getPharmacieDeGarde = async () => {
-  return pharmacieRepository.findPharmacieDeGarde();
+  const redisKey = "pharmacie:garde";
+  const gardeFromRedis = await redis.get(redisKey);
+  if (gardeFromRedis) {
+    return JSON.parse(gardeFromRedis) as Pharmacie[];
+  } else {
+    const gardeData = await pharmacieRepository.findPharmacieDeGarde();
+
+    await redis.set(redisKey, JSON.stringify(gardeData), "EX", 7 * 24 * 3600);
+    return gardeData;
+  }
 };
 
 const getPharmacieInformations = async (id: string) => {
