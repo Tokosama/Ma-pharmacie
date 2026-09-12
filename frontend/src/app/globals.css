@@ -8,13 +8,77 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  
-  --font-sans:var(--font-outfit);
-  --font-barlow:var(--font-barlow-condensed)
+
+  --font-sans: var(--font-outfit);
+  --font-barlow: var(--font-barlow-condensed);
+
+  /* Primary (vert) */
+  --color-primary-50: #e6fff1;
+  --color-primary-100: #b8ffd8;
+  --color-primary-200: #8affbe;
+  --color-primary-300: #5cffa5;
+  --color-primary-400: #2eff8c;
+  --color-primary-500: #0fff7b;
+  --color-primary-600: #00d15e;
+  --color-primary-700: #00a349;
+  --color-primary-800: #007535;
+  --color-primary-900: #004720;
+  --color-primary-950: #001a0b;
+
+  /* Secondary (turquoise) */
+  --color-secondary-50: #e5fffe;
+  --color-secondary-100: #b8fffb;
+  --color-secondary-200: #8afff9;
+  --color-secondary-300: #5cfff7;
+  --color-secondary-400: #2efff5;
+  --color-secondary-500: #0ffff3;
+  --color-secondary-600: #00d1c7;
+  --color-secondary-700: #00a39b;
+  --color-secondary-800: #00756f;
+  --color-secondary-900: #004744;
+  --color-secondary-950: #001a17;
+
+  /* Neutral (gris) */
+  --color-neutral-50: #f1f2f4;
+  --color-neutral-100: #d8dbdf;
+  --color-neutral-200: #bec4ca;
+  --color-neutral-300: #a5adb6;
+  --color-neutral-400: #8c96a1;
+  --color-neutral-500: #7b8793;
+  --color-neutral-600: #5e6973;
+  --color-neutral-700: #49525a;
+  --color-neutral-800: #353b41;
+  --color-neutral-900: #202427;
+  --color-neutral-950: #0b0d0e;
+
+  /* Error (rouge) */
+  --color-error-50: #f8eded;
+  --color-error-100: #f5dbdb;
+  --color-error-200: #f3c8c8;
+  --color-error-300: #f3b4b5;
+  --color-error-400: #f66f71;
+  --color-error-500: #f74548;
+  --color-error-600: #e12326;
+  --color-error-700: #c01b1e;
+  --color-error-800: #a21a1a;
+  --color-error-900: #8e1f1f;
+  --color-error-950: #8e1f1f;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  --shadow-md: 0 3px 6px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.12);
+  --shadow-lg: 0 10px 20px rgba(0, 0, 0, 0.15), 0 3px 6px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 15px 25px rgba(0, 0, 0, 0.15), 0 5px 10px rgba(0, 0, 0, 0.05);
+  --shadow-2xl: 0 20px 40px rgba(0, 0, 0, 0.2);
+
+  /*breakpoint*/
+
+   --breakpoint-tablet: 48rem;   /* 768px */
+  --breakpoint-desktop: 90rem;  /* 1440px */
 
 }
 
-@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: light) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
