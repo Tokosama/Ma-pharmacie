@@ -4,6 +4,15 @@ import { Header } from "@/components/Header";
 import { WelcomeCard } from "@/components/WelcomeCard";
 import { useState } from "react";
 
+import dynamic from "next/dynamic";
+
+const MapView = dynamic(
+  () => import("@/components/MapView").then((mod) => mod.MapView),
+  {
+    ssr: false,
+  },
+);
+
 type View = "welcome" | "map" | "grid";
 
 export default function Home() {
@@ -17,6 +26,7 @@ export default function Home() {
   return (
     <main className="relative h-screen w-screen overflow-hidden">
       {/* Header, MapView, WelcomeCard viendront ici */}
+      <MapView />
       <Header
         currentView={currentView}
         onCityClick={onCityClick}
@@ -24,7 +34,7 @@ export default function Home() {
 
       {currentView === "welcome" && (
         <>
-          <div className="absolute inset-0 z-10 bg-black/20 backdrop-blur-[2px]" />
+          <div className="absolute inset-0 z-10 bg-black/25 backdrop-blur-[2px]" />
           <div className="absolute inset-0 z-20 flex  items-center justify-center">
             <WelcomeCard onViewPharmacies={onViewPharmacies} />
           </div>

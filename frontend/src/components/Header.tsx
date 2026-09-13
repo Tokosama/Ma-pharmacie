@@ -17,7 +17,7 @@ export const Header = ({
   return (
     <>
       {!isSearchOpen && (
-        <div className="flex border-2 h-12 px-4 py-1 mt-3 rounded-lg mx-3  border-primary-800  justify-between items-center bg-neutral-300/30 backdrop-blur-xs shadow-md ">
+        <div className="flex border-2 h-12 px-4 py-1 mt-3 rounded-lg mx-3  border-primary-800/20  justify-between items-center bg-neutral-300/30 backdrop-blur-[2px] shadow-md ">
           <button
             className=""
             onClick={() => setIsSearchOpen(true)}
