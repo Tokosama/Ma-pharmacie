@@ -5,6 +5,7 @@ import "leaflet/dist/leaflet.css";
 import { useEffect, useId, useState } from "react";
 import { getPharmacies } from "@/lib/api";
 import { Pharmacie } from "@/types/pharmacie";
+import { LocateButton } from "./LocateButton";
 
 const InvalidateMapSize = () => {
   const map = useMap();
@@ -18,7 +19,29 @@ const InvalidateMapSize = () => {
   return null;
 };
 
+const LocateControl = () => {
+  const map = useMap();
+
+  const handleLocate = () => {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+        map.setView([latitude, longitude], 16);
+      },
+      (error) => {
+        console.error(
+          "Géolocalisation refusée ou indisponible :",
+          error.message,
+        );
+      },
+    );
+  };
+
+  return <LocateButton onLocate={handleLocate} />;
+};
+
 export const MapView = () => {
+  const mapId = useId();
   const [pharmacies, setPharmacies] = useState<Pharmacie[]>([]);
 
   useEffect(() => {
@@ -30,7 +53,6 @@ export const MapView = () => {
     fetchPharmacies();
   }, []);
 
-  const mapId = useId();
   return (
     <div className="absolute inset-0 z-0 isolate">
       <MapContainer
@@ -44,7 +66,6 @@ export const MapView = () => {
           url={`https://basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png?key=${process.env.NEXT_PUBLIC_CARTO_API_KEY}`}
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributalive">CARTO</a>'
         />
-        <InvalidateMapSize />
 
         {pharmacies.map((pharmacie) => (
           <Marker
@@ -54,6 +75,8 @@ export const MapView = () => {
             <Popup>{pharmacie.nom}</Popup>
           </Marker>
         ))}
+        <InvalidateMapSize />
+        <LocateControl />
       </MapContainer>
     </div>
   );

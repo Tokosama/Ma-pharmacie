@@ -5,6 +5,7 @@ import { WelcomeCard } from "@/components/WelcomeCard";
 import { useState } from "react";
 
 import dynamic from "next/dynamic";
+import { LocateButton } from "@/components/LocateButton";
 
 const MapView = dynamic(
   () => import("@/components/MapView").then((mod) => mod.MapView),
