@@ -1,8 +1,10 @@
 "use client";
 
-import { MapContainer, TileLayer, useMap } from "react-leaflet";
+import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import { useEffect, useId } from "react";
+import { useEffect, useId, useState } from "react";
+import { getPharmacies } from "@/lib/api";
+import { Pharmacie } from "@/types/pharmacie";
 
 const InvalidateMapSize = () => {
   const map = useMap();
@@ -17,6 +19,17 @@ const InvalidateMapSize = () => {
 };
 
 export const MapView = () => {
+  const [pharmacies, setPharmacies] = useState<Pharmacie[]>([]);
+
+  useEffect(() => {
+    const fetchPharmacies = async () => {
+      const data = await getPharmacies();
+      setPharmacies(data);
+    };
+
+    fetchPharmacies();
+  }, []);
+
   const mapId = useId();
   return (
     <div className="absolute inset-0 z-0 isolate">
@@ -32,6 +45,15 @@ export const MapView = () => {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributalive">CARTO</a>'
         />
         <InvalidateMapSize />
+
+        {pharmacies.map((pharmacie) => (
+          <Marker
+            key={pharmacie.id}
+            position={[Number(pharmacie.latitude), Number(pharmacie.longitude)]}
+          >
+            <Popup>{pharmacie.nom}</Popup>
+          </Marker>
+        ))}
       </MapContainer>
     </div>
   );
