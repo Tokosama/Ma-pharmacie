@@ -2,6 +2,8 @@ import express from "express";
 import pharmacieRoutes from "./routes/pharmacie.route.js";
 import itineraireRoutes from "./routes/itineraire.route.js";
 import gardeRoutes from "./routes/garde.route.js";
+import villeRoutes from "./routes/ville.route.js";
+
 import { errorHandler } from "./middlewares/errorHandler.js";
 import { limiter } from "./middlewares/rateLimiter.js";
 import cors from "cors";
@@ -22,6 +24,7 @@ app.use(limiter);
 app.use("/api/pharmacies", pharmacieRoutes);
 app.use("/api/itineraire", itineraireRoutes);
 app.use("/api/gardes", gardeRoutes);
+app.use("/api/villes", villeRoutes);
 app.use(errorHandler);
 const startServer = () => {
   app.listen(4000, () => {
